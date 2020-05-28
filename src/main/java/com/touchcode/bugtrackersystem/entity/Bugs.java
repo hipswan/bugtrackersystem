@@ -26,7 +26,7 @@ public class Bugs {
 	@Column(name="description")
 	private String Description;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="date")
 	private Date date;
 	
@@ -84,7 +84,9 @@ public class Bugs {
 		this.status = status;
 	}
 	
-	
+	Bugs(){
+		
+	}
 	
 	
 	
