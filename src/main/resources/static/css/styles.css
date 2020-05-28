@@ -1,0 +1,26 @@
+body {
+	background-color: #6a85c4;
+	background-image:
+		url("https://www.transparenttextures.com/patterns/cubes.png");
+	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+.card {
+	position: relative;
+}
+
+.editdelete {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.2rem;
+}
+
+.datemodified {
+	position: absolute;
+	bottom: 0.1rem;
+	right: 0.1rem;
+}
+
+.row {
+	text-align: left;
+}
