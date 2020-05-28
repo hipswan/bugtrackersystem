@@ -22,16 +22,16 @@ public class CreateBug {
 		try {			
 			// create a student object
 			System.out.println("Creating new student object...");
-			Bugs tempStudent = new Bugs();
-			tempStudent.setDate(new Date());
-			tempStudent.setId(45);
-			tempStudent.setStatus("Fixed");
+			Bugs tempBug = new Bugs();
+			tempBug.setDate(new Date());
+			tempBug.setId(45);
+			tempBug.setStatus("Fixed");
 			// start a transaction
 			session.beginTransaction();
 			
 			// save the student object
-			System.out.println("Saving the student...");
-			session.save(tempStudent);
+			System.out.println("Saving the Bug...");
+			session.save(tempBug);
 			
 			// commit transaction
 			session.getTransaction().commit();
