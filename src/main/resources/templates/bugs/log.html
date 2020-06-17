@@ -45,12 +45,11 @@
 				</nav>
 			</div>
 		</div>
-
 		<div class="card text-center">
 			<div class="card-header">
 				<ul class="nav nav-pills card-header-pills">
 					<li class="nav-item"><a class="nav-link active"
-						th:href="@{/bugs/showFormForAdd}"> Add Bug </a></li>
+						th:href="@{/bugs/list}"> Back </a></li>
 				</ul>
 			</div>
 
@@ -75,36 +74,19 @@
 
 								<div th:with="statusList = ${ {'Fixed', 'Closed', 'Open'} }"
 									class="btn-group">
-									<button type="button" class="btn btn-sm dropdown-toggle"
+									<button type="button" class="btn btn-sm "
 										th:classappend="${('Closed').equals(bug.status)} ? btn-success : (${('Fixed').equals(bug.status)} ? btn-primary :btn-warning ) "
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false">[[${bug.status}]]</button>
-									<div class="dropdown-menu">
-										<a th:each="i : ${statusList}" class="dropdown-item"
-											th:text="${i}"
-											th:href="@{/bugs/update(bugId=${bug.id},status=${i})}" />
+										data-toggle="" aria-haspopup="" aria-expanded="false">[[${bug.status}]]</button>
 
-									</div>
 								</div>
 							</div>
 
 
-							<a th:href="@{/bugs/log(bugId=${bug.id})}"
-								class="history btn-light btn-sm"> <i class="fas fa-history"></i>
-							</a>
+
 							<p class="card-text text-muted datemodified"
-								th:text="${'Last Modified on '+ #dates.format(bug.date, 'dd-MMM-yyyy')}" />
+								th:text="${'Updated on : '+ #dates.format(bug.date, 'dd-MMM-yyyy')}" />
 						</div>
-						<div class="editdelete">
-							<a th:href="@{/bugs/showFormForUpdate(bugId=${bug.id})}"
-								class="btn btn-info btn-sm"><i class="far fa-edit"></i> </a>
-							<!-- Add "delete" button/link -->
-							<a th:href="@{/bugs/delete(bugId=${bug.id})}"
-								class="btn btn-danger btn-sm"
-								onclick="if (!(confirm('Are you sure you want to delete this Bug?'))) return false">
-								<i class="fas fa-trash"></i>
-							</a>
-						</div>
+
 					</div>
 				</div>
 			</div>

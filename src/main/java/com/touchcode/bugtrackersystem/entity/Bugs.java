@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,29 +12,31 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity
-@Table(name="bug")
+@Table(name = "bug")
 public class Bugs {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id")
 	private int id;
-	
-	@Column(name="title")
-	private String title;
-	
-	@Column(name="description")
-	private String Description;
-	
+
+	@Column(name = "category")
+	private String category;
+
+	@Column(name = "description")
+	private String description;
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="date")
+	@Column(name = "date")
 	private Date date;
-	
-	@Column(name="addedby")
+
+	@Column(name = "addedby")
 	private String addedBy;
-	
-	@Column(name="status")
+
+	@Column(name = "status")
 	private String status;
 
 	public int getId() {
@@ -44,20 +47,20 @@ public class Bugs {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
 
 	public Date getDate() {
@@ -83,13 +86,18 @@ public class Bugs {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	Bugs(){
-		
+
+	public Bugs() {
+
 	}
-	
-	
-	
-	
-	
+
+	public Bugs(int id, String category, String description, Date date, String addedBy, String status) {
+		this.id = id;
+		this.category = category;
+		this.description = description;
+		this.date = date;
+		this.addedBy = addedBy;
+		this.status = status;
+	}
+
 }

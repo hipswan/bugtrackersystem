@@ -2,6 +2,7 @@ package com.touchcode.bugtrackersystem.service;
 
 import java.util.List;
 
+import com.touchcode.bugtrackersystem.entity.BugLog;
 import com.touchcode.bugtrackersystem.entity.Bugs;
 
 public interface BugService {
@@ -10,8 +11,12 @@ public interface BugService {
 
 	List<Bugs> findAll();
 
-	void save(Bugs theBug);
+	Bugs save(Bugs theBug);
 
 	void deleteById(int theId);
+
+	void saveBugLog(BugLog theBugLog);
+
+	List<BugLog> findLogFor(int bugId);
 
 }

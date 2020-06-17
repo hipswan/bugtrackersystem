@@ -1,5 +1,7 @@
 package com.touchcode.bugtrackersystem.controller;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.touchcode.bugtrackersystem.entity.BugLog;
 import com.touchcode.bugtrackersystem.entity.Bugs;
 import com.touchcode.bugtrackersystem.service.BugService;
 
@@ -32,30 +35,38 @@ public class BugController {
 	}
 
 	@PostMapping("/save")
-	public String saveandupdatebugs(@ModelAttribute("bug") Bugs theBug) {
-		theBug.setDate(new Date());
-		System.out.println(theBug.getDate());
-		bugservice.save(theBug);
+	public String saveandupdatebugs(@ModelAttribute("bug") Bugs theBug) throws ParseException {
+		if (!(theBug.getCategory().isEmpty() || theBug.getDescription().isEmpty() || theBug.getAddedBy().isEmpty())) {
+			Date now = new Date();
+			theBug.setDate(now);
 
-		return "redirect:/bugs/list";
+			Bugs newBug = bugservice.save(theBug);
+			System.out.println("The new Bugs is " + newBug.getId());
+			BugLog buglog = new BugLog();
+			buglog.saveBug(newBug);
+			bugservice.saveBugLog(buglog);
 
+			return "redirect:/bugs/list";
+		} else {
+			return "redirect:/bugs/showFormForAdd";
+		}
 	}
 
 	@GetMapping("/showFormForAdd")
-	public String bugcreationform(Model model) {
-
+	public String bugcreationform(Model model) throws ParseException {
 		Bugs bug = new Bugs();
-		bug.setDate(new Date());
+		Date now = new Date();
+		bug.setDate(now);
 		model.addAttribute("bug", bug);
 		return "bugs/form";
 
 	}
 
 	@GetMapping("/showFormForUpdate")
-	public String bugupdateform(@RequestParam("bugId") int bugId, Model model) {
-
+	public String bugupdateform(@RequestParam("bugId") int bugId, Model model) throws ParseException {
 		Bugs bug = bugservice.findById(bugId);
-		bug.setDate(new Date());
+		Date now = new Date();
+		bug.setDate(now);
 		model.addAttribute("bug", bug);
 		return "bugs/form";
 
@@ -63,21 +74,31 @@ public class BugController {
 
 	@GetMapping("/update")
 	public String bugupdateform(@RequestParam int bugId, String status, Model model) {
-		
 		Bugs bug = bugservice.findById(bugId);
 		bug.setStatus(status);
+		BugLog buglog = new BugLog();
+		buglog.saveBug(bug);
 		bugservice.save(bug);
+		bugservice.saveBugLog(buglog);
 		return "redirect:/bugs/list";
-
 	}
 
 	@GetMapping("/delete")
 	public String bugdelete(@RequestParam("bugId") int bugId) {
-
 		bugservice.deleteById(bugId);
-
 		return "redirect:/bugs/list";
+	}
 
+	@GetMapping("/log")
+	public String buglog(@RequestParam int bugId, Model model) {
+		System.out.println("Running history  method");
+		List<BugLog> buglogs = bugservice.findLogFor(bugId);
+//		List<Bugs> bugs = new ArrayList<>();
+//		for (BugLog buglog : buglogs) {
+//			bugs.add(buglog.givemeBug(buglog));
+//		}
+		model.addAttribute("bugs", buglogs);
+		return "bugs/log";
 	}
 
 }

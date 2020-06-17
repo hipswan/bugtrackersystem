@@ -9,9 +9,34 @@ body {
 	position: relative;
 }
 
+.navbar-brand {
+	margin-right: 53vw !Important;
+}
+
+@media all and (max-width:772px){
+	
+	.navbar-brand {
+	margin-right: 45vw !Important;
+}
+}
+.form-box {
+	display: flex;
+	justify-content: center;
+}
+
 .editdelete {
 	position: absolute;
 	top: 0.5rem;
+	right: 0.2rem;
+}
+
+.card-body {
+	position: relative;
+}
+
+.history {
+	position: absolute;
+	top: 0.2rem;
 	right: 0.2rem;
 }
 
